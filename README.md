@@ -38,7 +38,7 @@ RADIUS = 50 # in meters
 LLA = [61, 23]
 ```
 
-#Running within Docker
+# Running within Docker
 This repository is kept in sync with Docker Hub with each master commit.
 
 To obatin a hour report, replace the following command with the correct
