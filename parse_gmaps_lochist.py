@@ -25,8 +25,6 @@ from geopy.distance import vincenty
 from geopy.geocoders import Nominatim
 
 
-import json
-
 class DateTimeEncoder(json.JSONEncoder):
     
     def default(self, obj):
