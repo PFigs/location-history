@@ -50,12 +50,12 @@ def get_requirements(*args):
 
 
 setup(
-    name="location_history",
+    name="timemap",
     version="0.0.1",
     description="Location history parser and analyzer",
     long_description=long_description,
     author="PFigs",
-    url="https://github.com/pfigs/location-history",
+    url="https://github.com/pfigs/timemap",
     license="MIT",
     license_file=license,
     classifiers=[
