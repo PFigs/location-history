@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-sphinx-apidoc -f -o docs/source location_history
-cd docs;
-rm -rf wm-bcli || true
+mkdir -p docs/
+sphinx-apidoc -f -o docs/source timemap
+cd docs || exit
 make html
 
