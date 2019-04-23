@@ -1,4 +1,5 @@
 import datetime
+from .event import Event
 from typing import List
 
 
@@ -13,8 +14,19 @@ class Timeline(object):
 
     def __init__(self):
         super(Timeline, self).__init__()
-        self.events = None  # source it
+        self.events = dict()
         self.report = None  # Report()
+
+    def add(self, **kwargs):
+
+        key = kwargs["date"].isoformat()
+        event = Event(
+            date=kwargs["date"],
+            latitude=kwargs["latitude"],
+            longitude=kwargs["longitude"],
+            altitude=kwargs["altitude"],
+        )
+        self.events[key] = event
 
     def lookup(self, start: datetime.datetime, end: datetime.datetime):
         raise NotImplementedError
@@ -31,7 +43,15 @@ class Timeline(object):
         """
         return list(filter(lambda x: x.distance.meters < radius, self.events))
 
-    # allow for attribute indexing
     def __getitem__(self, key):
-        """ Loops through inpection on for loops """
         return self.events[key]
+
+    def __iter__(self):
+        for event in self.events:
+            yield event
+
+    def __len__(self):
+        return len(self.events)
+
+    def __str__(self):
+        return str(self.events)
