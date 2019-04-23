@@ -23,8 +23,24 @@ class Event(object):
         super(Event, self).__init__()
 
         self.date = date
-        self.lla = geopy.point.Point(latitude, longitude, altitude)
+        self._lla = geopy.point.Point(latitude, longitude, altitude)
         self.distance = None
+
+    @property
+    def latitude(self):
+        return self._lla.latitude
+
+    @property
+    def longitude(self):
+        return self._lla.longitude
+
+    @property
+    def altitude(self):
+        return self._lla.altitude
+
+    @property
+    def lla(self):
+        return self._lla
 
     def distance_to(self, latitude, longitude, altitude):
 

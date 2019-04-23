@@ -1,4 +1,5 @@
 import datetime
+from typing import List
 
 
 class Timeline(object):
@@ -18,7 +19,7 @@ class Timeline(object):
     def lookup(self, start: datetime.datetime, end: datetime.datetime):
         raise NotImplementedError
 
-    def map_distance(self, reference: list[float]):
+    def map_distance(self, reference: List[float]):
         """
         Computes distance to a reference point reference point
         """
