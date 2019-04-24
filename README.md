@@ -1,60 +1,42 @@
-# GMAPS Location History parser
+# Timemap
 
-Simple classes to deal with GMAPS location history files.
+> repository under renovation
 
-The goal is to understand how much time you spend in a given 
-area based on a center point and a radius around it.
+A python package to deal with location history files, such
+as GMAPS takeout json.
 
-This script requires:
+The main motivation behind this package is to allow simple analytics
+based on where you have been, for example, how long did you spend
+at the office over January?
 
-- GMAPS location history in JSON format (get it from takeout);
+
+Supported providers:
+* Google - takeout's json
 
 
-# Settings
+## Settings
 
-You can customize the runtime parameters by:
-
-- command line arguments;
-
-- configuration file.
-
-Command line definitions take precedence and overwrite what is 
-defined in a configuration file.
+You can customize the runtime parameters through a configuration file
+or command line parameters (requires extension).
 
 
 # Configuration File
-A configuration file can contain the following section and attributes
+The configuration consist of a yaml file. All the items in it, will be
+exposed as settings to your script.
+
+
+``` yaml
+filepath: ./.history.json
+start: 2019-03-01
+end: 2019-03-31
+
+radius: 200 # in meters
+latitude: 44.434 # in decimal format
+longitude: 22.213 # in decimal format
 ```
-[SOURCE]
-FILEPATH = ./location_history.json
-
-[DATE]
-START = 2017-01-01 # YYYY-MM-DD
-END = 2017-02-01 # YYYY-MM-DD
-BREAKS = 1 # dont count events spaced more than N hours apart
-
-[LOCATION]
-RADIUS = 50 # in meters
-LLA = [61, 23]
-```
-
-# Running within Docker
-This repository is kept in sync with Docker Hub with each master commit.
-
-To obatin a hour report, replace the following command with the correct
-path to your Location history data and your own settings ini file:
-
-```
-docker run --rm \
-            -v $(pwd)/your_location_history.json:/app/location_history.json \
-            -v $(pwd)/your_settings.ini:/app/defaults.ini \
-            pfigs/location-history
-	    
-``
-
-Alternatively you can pass in the desired time range using the command
-line arguments.
 
 
 # Contributing
 Feel free to send me your pull requests
+
+
