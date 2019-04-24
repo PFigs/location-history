@@ -1,29 +1,19 @@
 from ..timeline import Timeline
 from ..event import Event
 from ..error import DateEndError
-from typing import Any
+from typing import Any, Callable
 
 import ijson
 import datetime
 
 
-class TakeoutEvent(Event):
-    """TakeoutEvent"""
-
-    def __init__(self, kwargs):
-
-        super(TakeoutEvent, self).__init__(
-            date=kwargs["date"],
-            latitude=kwargs["latitude"],
-            longitude=kwargs["longitude"],
-            altitude=kwargs["altitude"],
-        )
-
-        self.accuracy = kwargs["accuracy"]
-
-
 class Takeout(Timeline):
-    """Takeout"""
+    """
+    Takeout
+
+    GMAPS specialization of the timeline interface
+
+    """
 
     SEARCHING = 1
     START_EVENT = 2
@@ -35,21 +25,14 @@ class Takeout(Timeline):
         self.filepath = filepath
         self._fd = None
         self._parse = None
-        self.info = None
-        self.events = dict()
         self.load()
 
     def load(self):
+        self.report.clear()
         if self._fd:
             self._fd.close()
         self._fd = open(self.filepath, "r")
         self._parser = ijson.parse(self._fd)
-
-    def add(self, **kwargs):
-
-        key = kwargs["date"].isoformat()
-        event = TakeoutEvent(kwargs)
-        self.events[key] = event
 
     def item_start(self, prefix: str, event: str, value: Any, storage: dict = None):
 
@@ -107,32 +90,34 @@ class Takeout(Timeline):
         return True
 
     def browse(self, start=None):
+        """ Quick overview of the contents the location history contents """
 
-        prefixes = set()
-        events = set()
-        info = dict(start=None, end=None, nb_entries=0)
+        self.report.clear()
 
         for prefix, event, value in self._parser:
-            prefixes.add(prefix)
-            events.add(event)
-
-            if self.item_start(prefix, event, value):
-                info["nb_entries"] = info["nb_entries"] + 1
-
             if prefix == "locations.item.timestampMs":
                 timestamp = float(value.encode()) / 1e3
                 date = datetime.datetime.fromtimestamp(timestamp)
-                if info["start"] is None:
-                    info["start"] = date
-                    info["start_timestamp"] = timestamp
-                info["end"] = date
-                info["end_timestamp"] = timestamp
+                self.report.add(date)
 
-        self.info = info
+        return self.report
 
-        return info
+    def lookup(
+        self,
+        start: datetime.datetime = None,
+        end: datetime.datetime = None,
+        event_filter: Callable = None,
+        event_filter_args: dict = None,
+    ):
+        """
+            Performs a search over the events and creates an object for valid ones
 
-    def lookup(self, start: datetime.datetime = None, end: datetime.datetime = None):
+            By default the validity of the objects is set according to the start
+            and end date. Optionally, a filter callable can be provided.
+
+            event_filter: when true, the object is considered valid
+            evnet_filter_args: additional arguments to pass to the filter function
+        """
 
         storage = dict()
         self.state = self.SEARCHING
@@ -148,10 +133,9 @@ class Takeout(Timeline):
             if self.state == self.START_EVENT:
 
                 if self.item_end(prefix, event, value, storage):
-                    self.add(**storage)
+                    self.add(event_filter, event_filter_args, **storage)
                     self.state = self.SEARCHING
                     continue
-
                 try:
                     if self.item_acquire(prefix, event, value, storage, start, end):
                         continue
