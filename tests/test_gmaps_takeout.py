@@ -29,7 +29,8 @@ def test_json_lookup():
     takeout.browse()
     takeout.load()
     takeout.lookup()
-    # assert len(takeout) == takeout.report["nb_entries"]
+    assert len(takeout) == takeout.report["nb_entries"]
+    assert len(takeout) > 0
 
     return takeout
 
@@ -38,21 +39,23 @@ def test_json_lookup_with_start():
 
     takeout = timemap.gmaps.Takeout(filepath=gmaps_sample)
     takeout.browse()
-    start = datetime.datetime.fromtimestamp(takeout.report["end_timestamp"])
+    start = datetime.datetime.fromtimestamp(takeout.report["start_timestamp"])
     takeout.load()
     takeout.lookup(start=start)
     assert len(takeout) == takeout.report["nb_entries"]
+    assert len(takeout) > 0
 
 
 def test_json_lookup_with_start_end():
 
     takeout = timemap.gmaps.Takeout(filepath=gmaps_sample)
     takeout.browse()
-    start = datetime.datetime.fromtimestamp(takeout.report["end_timestamp"])
-    end = datetime.datetime.fromtimestamp(takeout.report["start_timestamp"])
+    start = datetime.datetime.fromtimestamp(takeout.report["start_timestamp"])
+    end = datetime.datetime.fromtimestamp(takeout.report["end_timestamp"])
 
     takeout.load()
     takeout.lookup(start=start, end=end)
+    assert len(takeout) > 0
 
     assert len(takeout) == takeout.report["nb_entries"]
 
@@ -61,7 +64,7 @@ def test_json_lookup_with_end():
 
     takeout = timemap.gmaps.Takeout(filepath=gmaps_sample)
     takeout.browse()
-    end = datetime.datetime.fromtimestamp(takeout.report["start_timestamp"])
+    end = datetime.datetime.fromtimestamp(takeout.report["end_timestamp"])
 
     takeout.load()
     takeout.lookup(end=end)

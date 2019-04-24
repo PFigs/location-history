@@ -55,9 +55,9 @@ setup(
     description="Location history parser and analyzer",
     long_description=long_description,
     author="PFigs",
+    author_email="noreply@pfigs.com",
     url="https://github.com/pfigs/timemap",
     license="MIT",
-    license_file=license,
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",

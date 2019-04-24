@@ -4,7 +4,7 @@ import datetime
 
 def event_filter(event, latitude, longitude, radius, **kwargs):
     event.distance_2d(latitude, longitude)
-    if event.distance < radius:
+    if event.distance < float(radius):
         return True
     return False
 
