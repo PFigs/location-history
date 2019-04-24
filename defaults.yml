@@ -1,0 +1,10 @@
+---
+filepath: ./lochist.json
+
+start: 2018-01-01
+end: 2018-01-06
+breaks: 1
+
+radius: 100
+lla: [61.446627, 23.862370]
+
