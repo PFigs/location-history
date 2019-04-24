@@ -1,7 +1,7 @@
 from ..timeline import Timeline
 from ..event import Event
 from ..error import DateEndError
-from typing import Any, Callable
+from typing import Any, Callable, Union
 
 import ijson
 import datetime
@@ -26,6 +26,18 @@ class Takeout(Timeline):
         self._fd = None
         self._parse = None
         self.load()
+
+    def add(
+        self, event_filter: Callable = None, event_filter_args: dict = None, **kwargs
+    ) -> Union[Event, None]:
+
+        event = super().add(event_filter, event_filter_args, **kwargs)
+        if event is not None:
+            try:
+                event.accuracy = kwargs["accuracy"]
+            except KeyError:
+                pass
+        return event
 
     def load(self):
         self.report.clear()
@@ -68,7 +80,7 @@ class Takeout(Timeline):
                     return False
             if end is not None:
                 if date > end:
-                    raise DateEndError
+                    return False
 
             storage["date"] = date
 

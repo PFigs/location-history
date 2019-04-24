@@ -18,11 +18,13 @@ def test_settings_acquisition():
     settings = parser.settings(skip_undefined=True)
 
     print(settings)
-    assert settings.filepath == "./lochist.json"
-    assert settings.start == datetime.date(2018, 1, 1)
-    assert settings.end == datetime.date(2018, 1, 6)
-    assert settings.breaks == 1
-    assert settings.radius == 100
+    assert settings.filepath == "./.history.json"
+    assert settings.start > datetime.date(2018, 1, 1)
+    assert settings.end > datetime.date(2018, 1, 6)
+    assert settings.latitude > 61
+    assert settings.longitude > 23
+    assert settings.breaks > 0
+    assert settings.radius > 100
 
 
 if __name__ == "__main__":

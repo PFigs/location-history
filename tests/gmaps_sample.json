@@ -91,6 +91,58 @@
       "longitudeE7": 248081629,
       "timestampMs": "1524160040433",
       "verticalAccuracy": 3
+    },
+    {
+      "accuracy": 27,
+      "activity": [
+        {
+          "activity": [
+            {
+              "confidence": 100,
+              "type": "STILL"
+            }
+          ],
+          "timestampMs": "1556095297105"
+        },
+        {
+          "activity": [
+            {
+              "confidence": 100,
+              "type": "STILL"
+            }
+          ],
+          "timestampMs": "1556095361006"
+        }
+      ],
+      "altitude": 138,
+      "latitudeE7": 614342768,
+      "longitudeE7": 238111734,
+      "timestampMs": "1556095559357",
+      "verticalAccuracy": 2
+    },
+    {
+      "accuracy": 27,
+      "altitude": 138,
+      "latitudeE7": 614342768,
+      "longitudeE7": 238111734,
+      "timestampMs": "1556096001621",
+      "verticalAccuracy": 2
+    },
+    {
+      "accuracy": 27,
+      "altitude": 138,
+      "latitudeE7": 614342768,
+      "longitudeE7": 238111734,
+      "timestampMs": "1556096001744",
+      "verticalAccuracy": 2
+    },
+    {
+      "accuracy": 24,
+      "altitude": 138,
+      "latitudeE7": 614342725,
+      "longitudeE7": 238111717,
+      "timestampMs": "1556096466403",
+      "verticalAccuracy": 2
     }
   ]
 }

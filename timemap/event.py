@@ -52,12 +52,26 @@ class Event(object):
         if self._distance:
             return self._distance.meters
 
-    def distance_to(self, latitude: float, longitude: float, altitude: float) -> float:
+    def distance_3d(self, latitude: float, longitude: float, altitude: float) -> float:
         """ Computes the distance to a reference point given by the input lla """
 
         _reference_point = [latitude, longitude, altitude]
         self._distance = distance.geodesic(self.lla, _reference_point)
         return self.distance
+
+    def distance_2d(
+        self, latitude: float, longitude: float, altitude: float = None
+    ) -> float:
+        """ Computes the distance to a reference point given by the input lla """
+
+        _reference_point = [latitude, longitude]
+        self._distance = distance.geodesic(
+            [self._lla.latitude, self._lla.longitude], _reference_point
+        )
+        return self.distance
+
+    def __len__(self) -> int:
+        return 1
 
     def __str__(self) -> str:
         """String representation of object"""
