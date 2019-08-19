@@ -10,7 +10,7 @@ class Event(object):
     """
     Event
 
-    Interface definition for a timeline occurance
+    Interface definition for a timeline occurrence
 
     """
 

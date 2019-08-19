@@ -4,8 +4,10 @@ import datetime
 
 def event_filter(event, latitude, longitude, radius, **kwargs):
     event.distance_2d(latitude, longitude)
-    if event.distance < float(radius):
-        return True
+
+    if event.distance:
+        if event.distance < float(radius):
+            return True
     return False
 
 
@@ -18,5 +20,9 @@ if __name__ == "__main__":
         event_filter=event_filter,
         event_filter_args=settings.__dict__,
     )
-    report = takeout.summary(monthly=True)
-    report = takeout.summary()
+
+    takeout.report.total_monthly()
+    for item in takeout.report.montlhy:
+        item.describe()
+    takeout.summary(monthly=True)
+

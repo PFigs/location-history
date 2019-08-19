@@ -17,7 +17,7 @@ class Breakdown(object):
         self.previous = None
         self.current = None
 
-    def add(self, date: datetime.datetime, max_interval=1 * 60 * 60):
+    def add(self, date: datetime.datetime, max_interval:int=1 * 60 * 60):
         self.count += 1
         self.current = date
 
@@ -45,7 +45,7 @@ class Breakdown(object):
     def sum(self, other):
         self.hours += other.hours
         self.seconds += other.seconds
-        self.count += other.count
+        self.count += 1
 
     def __str__(self) -> str:
         """String representation of object"""
@@ -89,15 +89,9 @@ class Report(object):
                 self.start_timestamp = timestamp
 
         d = date.date().isoformat()
-
         if d not in self._daily:
             self._daily[d] = Breakdown(date)
         self._daily[d].add(date)
-
-        m = "{}{}".format(date.year, date.month)
-        if m not in self._monthly:
-            self._monthly[m] = Breakdown(date)
-        self._monthly[m].sum(self._daily[d])
 
     @property
     def daily(self):
@@ -106,18 +100,19 @@ class Report(object):
 
     @property
     def montlhy(self):
+        self.total_monthly()
         for k, v in self._monthly.items():
             yield v
 
     def total_daily(self, events: dict):
         self._daily.clear()
-        for key, events in events.items():
+        for key, event in events.items():
 
             if key not in self._daily:
                 date = datetime.datetime.strptime(key, "%Y-%m-%d")
                 self._daily[key] = Breakdown(date)
 
-            for hhash, event in events.items():
+            for hhash, event in event.items():
                 self._daily[key].add(event.date)
 
         return self._daily
