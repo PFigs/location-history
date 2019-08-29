@@ -1,7 +1,7 @@
 import os
 import re
 
-from setuptools import setup, find_packages, Extension
+from setuptools import setup, find_packages
 
 here = os.path.abspath(os.path.dirname(__file__))
 readme_file = "README.md"
