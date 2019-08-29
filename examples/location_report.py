@@ -25,4 +25,3 @@ if __name__ == "__main__":
     for item in takeout.report.montlhy:
         item.describe()
     takeout.summary(monthly=True)
-

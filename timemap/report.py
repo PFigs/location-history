@@ -17,7 +17,7 @@ class Breakdown(object):
         self.previous = None
         self.current = None
 
-    def add(self, date: datetime.datetime, max_interval:int=1 * 60 * 60):
+    def add(self, date: datetime.datetime, max_interval: int = 1 * 60 * 60):
         self.count += 1
         self.current = date
 
