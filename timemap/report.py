@@ -1,8 +1,6 @@
 from .utils import DateTimeEncoder
 import json
 import datetime
-from .event import Event
-from typing import List
 
 
 class Breakdown(object):
