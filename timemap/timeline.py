@@ -1,9 +1,16 @@
-from .utils import DateTimeEncoder
+"""
+    Timeline
+
+    This module contains a generic class that defines the
+    generic interface that location history providers
+    must implement.
+
+"""
+
 import datetime
-import json
+from typing import Union, Callable
 from .event import Event
 from .report import Report
-from typing import List, Union, Callable
 
 
 class Timeline(object):
@@ -23,6 +30,7 @@ class Timeline(object):
     def add(
         self, event_filter: Callable = None, event_filter_args: dict = None, **kwargs
     ) -> Union[Event, None]:
+        """ Stores events that fulfil the event_filter condition, if any """
 
         is_valid = True
 
@@ -68,6 +76,8 @@ class Timeline(object):
 
             return event
 
+        return None
+
     def lookup(
         self,
         start: datetime.datetime,
@@ -99,14 +109,13 @@ class Timeline(object):
         return self.events[date][hhash]
 
     def __iter__(self) -> Event:
-        for date, events in self.events.items():
+        for _, _ in self.events.items():
             for item in self.events.items():
                 yield item
 
     def __len__(self) -> int:
         count = 0
-
-        for date, events in self.events.items():
+        for _, events in self.events.items():
             count = count + len(events)
 
         return count

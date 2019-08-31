@@ -1,7 +1,15 @@
+"""
+    Utils
+
+    This module contains a general purpose classes to handle
+    encoding, time, among other things.
+
+"""
+
+import argparse
 import json
 import datetime
 import geopy
-import argparse
 import yaml
 
 
@@ -11,19 +19,26 @@ def serialize(obj) -> str:
 
 
 class DateTimeEncoder(json.JSONEncoder):
-    def default(self, obj) -> str:
+    """ JSON encoder that handles datetime serialization """
+
+    # pylint: disable=E0202
+    # pylint: disable=W0221
+    def default(self, obj):
 
         if isinstance(obj, (datetime.date, datetime.datetime)):
             obj = obj.isoformat()
             return obj
 
-        elif isinstance(obj, (geopy.Point)):
+        if isinstance(obj, (geopy.Point)):
             return str([obj.latitude, obj.longitude, obj.altitude])
 
-        else:
+        if isinstance(obj, argparse.ArgumentParser):
             return str(obj)
 
         return json.JSONEncoder.default(self, obj)
+
+    # pylint: enable=E0202
+    # pylint: enable=W0221
 
 
 class Settings(object):
@@ -31,21 +46,23 @@ class Settings(object):
 
     def __init__(self, settings: dict):
         super(Settings, self).__init__()
-        for k, v in settings.items():
-            self.__dict__[k] = v
+        for key, value in settings.items():
+            self.__dict__[key] = value
 
     def items(self):
+        """ Returns all the setting items """
         return self.__dict__.items()
 
     @classmethod
     def from_args(cls, args, skip_undefined=True):
+        """ Returns a setting arguments based on the arguments input """
         settings = dict()
 
         try:
             if args.settings:
-                with open(args.settings, "r") as f:
-                    settings = yaml.load(f, Loader=yaml.FullLoader)
-        except:
+                with open(args.settings, "r") as settings_file:
+                    settings = yaml.load(settings_file, Loader=yaml.FullLoader)
+        except IOError:
             pass
 
         for key, value in args.__dict__.items():
@@ -77,6 +94,8 @@ class ParserHelper(object):
             description=description, formatter_class=formatter_class
         )
         self._groups = dict()
+        self._arguments = None
+        self._unknown_arguments = None
 
     @property
     def parser(self):
@@ -100,6 +119,7 @@ class ParserHelper(object):
         return self._unknown_arguments
 
     def settings(self, settings_class=None, skip_undefined=True) -> "Settings":
+        """ Parses arguments into a settings class """
 
         if settings_class is None:
             settings_class = Settings
@@ -126,15 +146,14 @@ class ParserHelper(object):
 
     def dump(self, path):
         """ dumps the arguments into a file """
-        with open(path, "w") as f:
-            f.write(serialize(vars(self._arguments)))
+        with open(path, "w") as dump_file:
+            dump_file.write(serialize(vars(self._arguments)))
 
     @classmethod
     def default_args(cls, text="Time map arguments") -> "ParserHelper":
+        """ Provides default arguments """
         parse = cls(description=text)
-
         parse.add_file_settings()
-
         return parse
 
     def __str__(self):

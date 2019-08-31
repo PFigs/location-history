@@ -1,10 +1,18 @@
-from ..timeline import Timeline
-from ..event import Event
-from ..error import DateEndError
+"""
+    Takeout
+
+    This module contains the classes that handles
+    outputs from Google's Takeout.
+"""
+
+import datetime
 from typing import Any, Callable, Union
 
 import ijson
-import datetime
+
+from ..timeline import Timeline
+from ..event import Event
+from ..error import DateEndError
 
 
 class Takeout(Timeline):
@@ -25,6 +33,7 @@ class Takeout(Timeline):
         self.filepath = filepath
         self._fd = None
         self._parse = None
+        self.state = None
         self.load()
 
     def add(
@@ -40,28 +49,32 @@ class Takeout(Timeline):
         return event
 
     def load(self):
+        """ Opens the file and preprares the file stream """
         self.report.clear()
         if self._fd:
             self._fd.close()
         self._fd = open(self.filepath, "r")
         self._parser = ijson.parse(self._fd)
 
-    def item_start(self, prefix: str, event: str, value: Any, storage: dict = None):
-
+    # pylint: disable=W0613
+    @staticmethod
+    def item_start(prefix: str, event: str, value: Any, storage: dict = None):
+        """ Returns true when an item is starting - matches start_map"""
         if prefix == "locations.item" and event == "start_map":
             return True
-        else:
-            return False
-
-    def item_end(self, prefix: str, event: str, value: Any, storage: dict = None):
-
-        if prefix == "locations.item" and event == "end_map":
-            return True
-
         return False
 
+    # pylint: disable=W0613
+    @staticmethod
+    def item_end(prefix: str, event: str, value: Any, storage: dict = None):
+        """ Returns true when an item is ending - matches end_map"""
+        if prefix == "locations.item" and event == "end_map":
+            return True
+        return False
+
+    # pylint: disable=R0913
+    @staticmethod
     def item_acquire(
-        self,
         prefix: str,
         event: str,
         value: Any,
@@ -69,7 +82,7 @@ class Takeout(Timeline):
         start: datetime.datetime = None,
         end: datetime.datetime = None,
     ):
-
+        """ Maps file attributes into the internal storage dictionary """
         if prefix == "locations.item.timestampMs":
             date = float(value.encode()) / 1e3
             date = datetime.datetime.fromtimestamp(date)
@@ -101,12 +114,12 @@ class Takeout(Timeline):
 
         return True
 
-    def browse(self, start=None):
+    def browse(self):
         """ Quick overview of the contents the location history contents """
 
         self.report.clear()
 
-        for prefix, event, value in self._parser:
+        for prefix, _, value in self._parser:
             if prefix == "locations.item.timestampMs":
                 timestamp = float(value.encode()) / 1e3
                 date = datetime.datetime.fromtimestamp(timestamp)

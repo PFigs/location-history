@@ -89,7 +89,7 @@ def test_event_filter_none():
 
 def test_event_filter_some():
     def event_filter(event, latitude, longitude, altitude, radius, **kwargs):
-        event.distance_2d(latitude, longitude, altitude)
+        event.distance_2d(latitude, longitude)
         if event.distance > radius:
             return False
         return True
@@ -103,7 +103,7 @@ def test_event_filter_some():
 
 def test_daily_report():
     def event_filter(event, latitude, longitude, altitude, radius, **kwargs):
-        event.distance_2d(latitude, longitude, altitude)
+        event.distance_2d(latitude, longitude)
         if event.distance > radius:
             return False
         return True

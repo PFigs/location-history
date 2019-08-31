@@ -1,9 +1,18 @@
-from .utils import DateTimeEncoder
+"""
+    Event
+
+    This module contains the classes that define
+    an occurance within the timeline object.
+
+"""
+
 import datetime
-import geopy
-from geopy import distance
 import json
 from typing import List
+
+import geopy
+from geopy import distance
+from .utils import DateTimeEncoder
 
 
 class Event(object):
@@ -49,8 +58,10 @@ class Event(object):
 
     @property
     def distance(self) -> float:
+        """ Returns the distance in meters to the lla of interest """
         if self._distance:
             return self._distance.meters
+        return float("nan")
 
     def distance_3d(self, latitude: float, longitude: float, altitude: float) -> float:
         """ Computes the distance to a reference point given by the input lla """
@@ -59,9 +70,7 @@ class Event(object):
         self._distance = distance.geodesic(self.lla, _reference_point)
         return self.distance
 
-    def distance_2d(
-        self, latitude: float, longitude: float, altitude: float = None
-    ) -> float:
+    def distance_2d(self, latitude: float, longitude: float) -> float:
         """ Computes the distance to a reference point given by the input lla """
 
         _reference_point = [latitude, longitude]

@@ -1,3 +1,10 @@
+"""
+    About Timemap
+
+    This file contains the metadata that is appended to the
+    python wheel file, upon the setup.py call.
+"""
+
 __author__ = "Pedro Silva"
 __author_email__ = "noreply@pfgis.com"
 __classifiers__ = [
