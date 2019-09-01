@@ -1,9 +1,8 @@
-from .utils import DateTimeEncoder
 import datetime
-import json
+
 from .event import Event
 from .report import Report
-from typing import List, Union, Callable
+from typing import Union, Callable
 
 
 class Timeline(object):

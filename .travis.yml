@@ -1,5 +1,6 @@
 dist: bionic
 language: python
+cache: pip
 python:
    - 3.7
 
@@ -14,13 +15,7 @@ install:
 
 script:
    - pytest
-
-jobs:
-  include:
-    - stage: changelog_creation
-      script: github_changelog_generator -t ${GITHUB_TOKEN}
-      on:
-        tags: true
+   - github_changelog_generator -t ${GITHUB_TOKEN} || true
 
 deploy:
   - provider: releases

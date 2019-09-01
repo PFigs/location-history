@@ -45,7 +45,7 @@ class Settings(object):
             if args.settings:
                 with open(args.settings, "r") as f:
                     settings = yaml.load(f, Loader=yaml.FullLoader)
-        except:
+        except IOError:
             pass
 
         for key, value in args.__dict__.items():

@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 """
 Writing gmaps data into influxdb
 
 """
-import json
+
 import ijson
 import argparse
 import datetime
