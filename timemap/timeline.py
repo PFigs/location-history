@@ -13,7 +13,6 @@ from .event import Event
 from .report import Report
 
 
-
 class Timeline(object):
     """
     Timeline
