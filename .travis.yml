@@ -4,7 +4,7 @@ python:
    - 3.7
 
 before_install:
-  - sudo gem install github_changelog_generator
+  - sudo gem install github_changelog_generator &
   - pip install -r dev-requirements.txt
   - flake8 timemap
   - black --check timemap
@@ -18,16 +18,29 @@ script:
 jobs:
   include:
     - stage: changelog_creation
-      script: github_changelog_generator
+      script: github_changelog_generator -t ${GITHUB_TOKEN}
       on:
-        all_branches: true
+        tags: true
 
 deploy:
-  provider: pypi
-  user: ${TWINE_USERNAME}
-  password: ${TWINE_PASSWORD}
-  skip_existing: true
-  distributions: "sdist bdist_wheel"
-  on:
-    tags: true
+  - provider: releases
+    api_key: ${GITHUB_TOKEN}
+    file_glob: true
+    file:
+      - ./dist/*
+      - CHANGELOG.md
+    skip_cleanup: true
+    on:
+      tags: true
+      branch: master
+
+  - provider: pypi
+    user: ${TWINE_USERNAME}
+    password: ${TWINE_PASSWORD}
+    skip_existing: true
+    skip_cleanup: true
+    distributions: "sdist bdist_wheel"
+    on:
+      tags: true
+      branch: master
 
