@@ -3,13 +3,24 @@ language: python
 python:
    - 3.7
 
+before_install:
+  - sudo gem install github_changelog_generator
+  - pip install -r dev-requirements.txt
+  - flake8 timemap
+  - black --check timemap
+
 install:
-  - pip install -r requirements.txt
   - pip install .
 
 script:
    - pytest
 
+jobs:
+  include:
+    - stage: changelog_creation
+      script: github_changelog_generator
+      on:
+        all_branches: true
 
 deploy:
   provider: pypi
@@ -19,3 +30,4 @@ deploy:
   distributions: "sdist bdist_wheel"
   on:
     tags: true
+
