@@ -45,10 +45,16 @@ with open(get_absolute_path("./timemap/__about__.py")) as f:
 
 setup(
     name=about["__pkg_name__"],
-    version=about["__version__"],
     description=about["__description__"],
     long_description=long_description,
     long_description_content_type="text/markdown",
+    setup_requires=["setuptools_scm"],
+    use_scm_version={
+        "root": ".",
+        "relative_to": __file__,
+        "version_scheme": "python-simplified-semver",
+        "local_scheme": "no-local-version",
+    },
     author=about["__author__"],
     author_email=about["__author_email__"],
     url=about["__url__"],
