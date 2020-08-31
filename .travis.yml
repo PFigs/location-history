@@ -1,20 +1,16 @@
 dist: bionic
-language: python
+language: bash
 cache: pip
+services:
+  - docker
 python:
    - 3.7
 
 before_install:
-  - pip install pipenv
-  - pipenv install --dev
-  - pre-commit run --all-files 
-
-install:
-  - pipenv lock --requirements > requirements.txt
-  - pipenv install
+  - docker-compose build
 
 script:
-   - pytest
+   - docker-compose run timemap pytest
 
 deploy:
   provider: pypi

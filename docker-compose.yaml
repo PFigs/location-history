@@ -1,0 +1,10 @@
+version: "3.7"
+services:
+  timemap:
+    container_name: timemap
+    image: pfigs/timemap
+    build:
+      dockerfile: container/Dockerfile
+      context: .
+      target: build
+    restart: "no"
