@@ -11,6 +11,7 @@ from . import gmaps
 
 
 def event_filter(event, latitude, longitude, radius, **kwargs):
+    """ rule on how to filter the event """
     event.distance_2d(latitude, longitude)
 
     if event.distance:
@@ -20,6 +21,7 @@ def event_filter(event, latitude, longitude, radius, **kwargs):
 
 
 def location_report():
+    """ entrypoint to calculate a monthly report """
 
     settings = ParserHelper.default_args().settings(skip_undefined=True)
     takeout = gmaps.Takeout(filepath=settings.filepath)
