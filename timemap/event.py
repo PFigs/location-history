@@ -72,7 +72,10 @@ class Event(object):
 
         _reference_point = [latitude, longitude, altitude]
 
-        euclidean_distance = math.sqrt(distance.great_circle(self.lla[0:2], _reference_point[0:2]).m**2 + (self.lla[2] - _reference_point[2])**2)
+        euclidean_distance = math.sqrt(
+            distance.great_circle(self.lla[0:2], _reference_point[0:2]).m ** 2
+            + (self.lla[2] - _reference_point[2]) ** 2
+        )
         self._distance = euclidean_distance
 
         return self.distance
