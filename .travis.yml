@@ -10,7 +10,8 @@ before_install:
   - pre-commit run --all-files 
 
 install:
-  - pipenv install 
+  - pipenv lock --requirements > requirements.txt
+  - pipenv install
 
 script:
    - pytest

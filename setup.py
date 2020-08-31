@@ -33,6 +33,8 @@ def get_requirements(*args):
         for line in handle:
             # Strip comments.
             line = re.sub(r"^#.*|\s#.*", "", line)
+            if "-" in line[0]:
+                continue
             # Ignore empty lines
             if line and not line.isspace():
                 requirements.add(re.sub(r"\s+", "", line))
