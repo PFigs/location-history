@@ -19,6 +19,6 @@ services:
     
     # add TIMEMAP_DATA to your .env file
     volumes:
-      - ${TIMEMAP_DATA}:/data
+      - ./input:/data
 
     command: ["timemap-report", "--settings" , "/data/custom.yml"]      
