@@ -7,7 +7,7 @@ verify_ssl = true
 
 [packages]
 geopy = "==1.20.0"
-ijson = "==2.4"
+ijson = "==3.1.1"
 PyYAML = "==5.1.2"
 black = "==19.3b0"
 flake8 = "==3.7.8"
