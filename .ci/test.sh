@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
 
-pip install dist/*.whl
-pytest -s -v
-
+pre-commit run --all-files 
+pytest
