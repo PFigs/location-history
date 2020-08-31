@@ -5,6 +5,8 @@
     python wheel file, upon the setup.py call.
 """
 
+from pkg_resources import get_distribution, DistributionNotFound
+
 __author__ = "Pedro Silva"
 __author_email__ = "noreply@pfgis.com"
 __classifiers__ = [
@@ -20,5 +22,12 @@ __license__ = "MIT"
 __pkg_name__ = "timemap"
 __title__ = "Time map"
 __url__ = "https://github.com/pfigs/location-history"
-__version__ = "0.1.0"
+
 __keywords__ = ("maps location time tracking",)
+
+
+try:
+    __version__ = get_distribution(__name__).version
+except DistributionNotFound:
+    # package is not installed
+    pass
