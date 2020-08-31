@@ -5,16 +5,15 @@ python:
    - 3.7
 
 before_install:
-  - pip install -r dev-requirements.txt
-  - flake8 timemap
-  - black --check timemap
+  - pip install pipenv
+  - pipenv install --dev
+  - pre-commit run --all-files 
 
 install:
-  - pip install .
+  - pipenv install 
 
 script:
    - pytest
-
 
 deploy:
   provider: pypi
