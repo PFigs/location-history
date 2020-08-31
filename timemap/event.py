@@ -8,6 +8,7 @@
 
 import datetime
 import json
+import math
 from typing import List
 
 import geopy
@@ -60,14 +61,23 @@ class Event(object):
     def distance(self) -> float:
         """ Returns the distance in meters to the lla of interest """
         if self._distance:
-            return self._distance.meters
+            try:
+                return self._distance.meters
+            except AttributeError:
+                return self._distance
         return float("nan")
 
     def distance_3d(self, latitude: float, longitude: float, altitude: float) -> float:
         """ Computes the distance to a reference point given by the input lla """
 
         _reference_point = [latitude, longitude, altitude]
-        self._distance = distance.geodesic(self.lla, _reference_point)
+
+        euclidean_distance = math.sqrt(
+            distance.great_circle(self.lla[0:2], _reference_point[0:2]).m ** 2
+            + (self.lla[2] - _reference_point[2]) ** 2
+        )
+        self._distance = euclidean_distance
+
         return self.distance
 
     def distance_2d(self, latitude: float, longitude: float) -> float:

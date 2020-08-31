@@ -53,7 +53,7 @@ class Takeout(Timeline):
         self.report.clear()
         if self._fd:
             self._fd.close()
-        self._fd = open(self.filepath, "r")
+        self._fd = open(self.filepath, "rb")
         self._parser = ijson.parse(self._fd)
 
     # pylint: disable=W0613
