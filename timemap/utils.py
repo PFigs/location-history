@@ -140,7 +140,7 @@ class ParserHelper(object):
             "--settings",
             type=str,
             required=False,
-            default="defaults.yml",
+            default="./tests/defaults.yml",
             help="settings file.",
         )
 

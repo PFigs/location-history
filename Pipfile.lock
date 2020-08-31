@@ -1,7 +1,7 @@
 {
   "_meta": {
     "hash": {
-      "sha256": "cebda0cd651cacdc7372c35d82db06e9ba5a255edfd4bef96e772532ea4e9eb8"
+      "sha256": "a42785d0572fa12e146165d07dc2bc1dc8bddf1c3285eafa216b9dfdb7e2cb86"
     },
     "pipfile-spec": 6,
     "requires": {},
@@ -93,6 +93,7 @@
       "version": "==5.3.1"
     },
     "timemap": {
+      "editable": true,
       "path": "."
     }
   },
