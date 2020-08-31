@@ -9,3 +9,5 @@ radius: 1000 # in meters
 latitude: 64.4331
 longitude: 24.808
 
+report: total_monthly
+

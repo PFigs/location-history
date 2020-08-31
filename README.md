@@ -28,4 +28,4 @@ Please see an example from [defaults.yaml][defaults.yaml].
 # Contributing
 Feel free to send me your pull requests and create issues for your ideas.
 
-[defaults.yaml]: ./tests/defaults.yaml
+[defaults.yaml]: https://github.com/PFigs/location-history/blob/master/tests/defaults.yml
