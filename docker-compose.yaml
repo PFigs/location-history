@@ -1,10 +1,24 @@
 version: "3.7"
 services:
+  timemap-tests:
+    container_name: timemap-tests
+    image: pfigs/timemap-tests
+    build:
+      dockerfile: container/Dockerfile
+      context: .
+      target: test
+    restart: "no"
+
   timemap:
     container_name: timemap
     image: pfigs/timemap
     build:
       dockerfile: container/Dockerfile
       context: .
-      target: build
     restart: "no"
+    
+    # add TIMEMAP_DATA to your .env file
+    volumes:
+      - ${TIMEMAP_DATA}:/data
+
+    command: ["timemap-report", "--settings" , "/data/custom.yml"]      

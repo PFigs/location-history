@@ -6,6 +6,6 @@ end: 2018-04-30
 breaks: 1
 
 radius: 1000 # in meters
-latitude: 64.4331875
-longitude: 24.8081649
+latitude: 64.4331
+longitude: 24.808
 

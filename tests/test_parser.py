@@ -15,6 +15,7 @@ def test_parser_serialization():
 def test_settings_acquisition():
 
     parser = timemap.ParserHelper.default_args()
+
     settings = parser.settings(skip_undefined=True)
 
     print(settings)

@@ -12,12 +12,6 @@ repos:
       args: [--fix=lf]
       exclude: '\.bat$'
 
--   repo: https://github.com/pryorda/dockerfilelint-precommit-hooks
-    rev: v0.1.0
-    hooks:
-    - id: dockerfilelint
-      stages: [commit]
-
 -   repo: git://github.com/detailyang/pre-commit-shell
     rev: 1.0.4
     hooks:
