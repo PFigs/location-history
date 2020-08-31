@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3 as setup
 
 WORKDIR /app
 
@@ -17,7 +17,7 @@ RUN pip install -e .
 
 CMD [ "timemap-report" ]
 
-FROM python:3 as build
+FROM setup as test
 
 RUN ./.ci/build.sh
 RUN ./.ci/test.sh

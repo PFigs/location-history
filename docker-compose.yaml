@@ -6,7 +6,7 @@ services:
     build:
       dockerfile: container/Dockerfile
       context: .
-      target: build
+      target: test
     restart: "no"
 
   timemap:
